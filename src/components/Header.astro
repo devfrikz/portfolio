@@ -1,24 +1,30 @@
 ---
 import { site } from "../data/site";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/utils";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { label: "Sobre mí", href: "/#about" },
-  { label: "Proyectos", href: "/#projects" },
-  { label: "CV", href: "/cv" },
-  { label: "Contacto", href: "/#contact" },
+  { label: t("nav.about"), href: getLocalizedPath("/#about", lang) },
+  { label: t("nav.projects"), href: getLocalizedPath("/#projects", lang) },
+  { label: t("nav.cv"), href: getLocalizedPath("/cv", lang) },
+  { label: t("nav.contact"), href: getLocalizedPath("/#contact", lang) },
 ];
 ---
 
 <header class="sticky top-0 z-50 backdrop-blur-md bg-[color:var(--color-bg)]/80 border-b border-[color:var(--color-border)]">
-  <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+  <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
     <a
-      href="/"
-      class="font-mono text-sm font-semibold text-[color:var(--color-accent)] hover:text-[color:var(--color-accent-hover)] transition-colors"
+      href={getLocalizedPath("/", lang)}
+      class="font-mono text-sm font-semibold text-[color:var(--color-accent)] hover:text-[color:var(--color-accent-hover)] transition-colors flex-shrink-0"
     >
       ~/{site.name.toLowerCase().replace(" ", "")}
     </a>
 
-    <ul class="hidden md:flex items-center gap-8 text-sm text-[color:var(--color-text-muted)]">
+    <ul class="hidden md:flex items-center gap-6 text-sm text-[color:var(--color-text-muted)]">
       {navItems.map((item) => (
         <li>
           <a href={item.href} class="hover:text-[color:var(--color-text)] transition-colors">
@@ -28,11 +34,14 @@ const navItems = [
       ))}
     </ul>
 
-    <a
-      href={site.social.email}
-      class="text-sm px-4 py-2 rounded-md bg-[color:var(--color-accent)] text-[color:var(--color-bg)] font-medium hover:bg-[color:var(--color-accent-hover)] transition-colors"
-    >
-      Hablemos
-    </a>
+    <div class="flex items-center gap-3">
+      <LanguageSwitcher currentLang={lang} currentPath={currentPath} />
+      <a
+        href={site.social.email}
+        class="hidden sm:inline-block text-sm px-4 py-2 rounded-md bg-[color:var(--color-accent)] text-[color:var(--color-bg)] font-medium hover:bg-[color:var(--color-accent-hover)] transition-colors"
+      >
+        {t("nav.cta")}
+      </a>
+    </div>
   </nav>
 </header>

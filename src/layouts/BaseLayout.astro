@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
-import { site } from "../data/site";
+import { site, pick } from "../data/site";
+import { getLangFromUrl } from "../i18n/utils";
 
 interface Props {
   title?: string;
@@ -9,13 +10,17 @@ interface Props {
 }
 
 const { title, description, path = "" } = Astro.props;
-const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.title}`;
-const pageDescription = description ?? site.bio;
+const lang = getLangFromUrl(Astro.url);
+
+const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${pick(site.title, lang)}`;
+const pageDescription = description ?? pick(site.bio, lang);
 const canonical = `https://tyronnemendoza.com${path}`;
+const altPath = lang === "es" ? `/en${path}` : path.replace(/^\/en/, "") || "/";
+const altUrl = `https://tyronnemendoza.com${altPath}`;
 ---
 
 <!doctype html>
-<html lang="es" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,6 +29,9 @@ const canonical = `https://tyronnemendoza.com${path}`;
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es" href={`https://tyronnemendoza.com${lang === "es" ? path : path.replace(/^\/en/, "") || "/"}`} />
+    <link rel="alternate" hreflang="en" href={`https://tyronnemendoza.com${lang === "en" ? path : `/en${path}`}`} />
+    <link rel="alternate" hreflang="x-default" href={`https://tyronnemendoza.com${path.replace(/^\/en/, "") || "/"}`} />
 
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
@@ -33,11 +41,12 @@ const canonical = `https://tyronnemendoza.com${path}`;
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={lang === "es" ? "es_ES" : "en_US"} />
+    <meta property="og:locale:alternate" content={lang === "es" ? "en_US" : "es_ES"} />
     <meta property="og:image" content="https://tyronnemendoza.com/og-image.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${site.fullName} — ${site.title}`} />
+    <meta property="og:image:alt" content={`${site.fullName} — ${pick(site.title, lang)}`} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />

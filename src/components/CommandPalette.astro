@@ -1,6 +1,10 @@
 ---
 import { site } from "../data/site";
 import { projects } from "../data/projects";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 type Command = {
   id: string;
@@ -12,24 +16,24 @@ type Command = {
 };
 
 const commands: Command[] = [
-  { id: "home", group: "Navegar", label: "Inicio", hint: "/", href: "/" },
-  { id: "about", group: "Navegar", label: "Sobre mí", hint: "#about", href: "/#about" },
-  { id: "projects", group: "Navegar", label: "Proyectos", hint: "#projects", href: "/#projects" },
-  { id: "contact", group: "Navegar", label: "Contacto", hint: "#contact", href: "/#contact" },
-  { id: "cv", group: "Navegar", label: "CV", hint: "/cv", href: "/cv" },
+  { id: "home", group: t("cmdk.groupNav"), label: t("cmdk.itemHome"), hint: "/", href: getLocalizedPath("/", lang) },
+  { id: "about", group: t("cmdk.groupNav"), label: t("cmdk.itemAbout"), hint: "#about", href: getLocalizedPath("/#about", lang) },
+  { id: "projects", group: t("cmdk.groupNav"), label: t("cmdk.itemProjects"), hint: "#projects", href: getLocalizedPath("/#projects", lang) },
+  { id: "contact", group: t("cmdk.groupNav"), label: t("cmdk.itemContact"), hint: "#contact", href: getLocalizedPath("/#contact", lang) },
+  { id: "cv", group: t("cmdk.groupNav"), label: t("cmdk.itemCV"), hint: "/cv", href: getLocalizedPath("/cv", lang) },
 
   ...projects.map((p) => ({
     id: `project-${p.slug}`,
-    group: "Proyectos",
+    group: t("cmdk.groupProjects"),
     label: p.title,
-    hint: p.jobTitle,
-    href: `/projects/${p.slug}`,
+    hint: p.jobTitle[lang],
+    href: getLocalizedPath(`/projects/${p.slug}`, lang),
   })),
 
-  { id: "linkedin", group: "Redes", label: "LinkedIn", hint: "/in/devfrikkz", href: site.social.linkedin, external: true },
-  { id: "github", group: "Redes", label: "GitHub", hint: "@devfrikz", href: site.social.github, external: true },
-  { id: "twitter", group: "Redes", label: "Twitter / X", hint: "@devfrikz", href: site.social.twitter, external: true },
-  { id: "email", group: "Redes", label: "Enviar email", hint: site.email, href: site.social.email },
+  { id: "linkedin", group: t("cmdk.groupSocial"), label: t("cmdk.itemLinkedIn"), hint: "/in/devfrikkz", href: site.social.linkedin, external: true },
+  { id: "github", group: t("cmdk.groupSocial"), label: t("cmdk.itemGitHub"), hint: "@devfrikz", href: site.social.github, external: true },
+  { id: "twitter", group: t("cmdk.groupSocial"), label: t("cmdk.itemTwitter"), hint: "@devfrikz", href: site.social.twitter, external: true },
+  { id: "email", group: t("cmdk.groupSocial"), label: t("cmdk.itemEmail"), hint: site.email, href: site.social.email },
 ];
 ---
 
@@ -47,7 +51,7 @@ const commands: Command[] = [
       <input
         id="cmdk-input"
         type="text"
-        placeholder="Buscar página, proyecto, red..."
+        placeholder={t("cmdk.placeholder")}
         class="flex-1 bg-transparent outline-none text-[color:var(--color-text)] placeholder:text-[color:var(--color-text-subtle)] font-mono text-sm"
         autocomplete="off"
         spellcheck="false"
@@ -83,8 +87,8 @@ const commands: Command[] = [
 
     <div class="flex items-center justify-between gap-3 px-4 py-2.5 border-t border-[color:var(--color-border)] text-[10px] font-mono text-[color:var(--color-text-subtle)]">
       <div class="flex items-center gap-3">
-        <span class="flex items-center gap-1"><kbd class="kbd">↑</kbd><kbd class="kbd">↓</kbd> navegar</span>
-        <span class="flex items-center gap-1"><kbd class="kbd">↵</kbd> abrir</span>
+        <span class="flex items-center gap-1"><kbd class="kbd">↑</kbd><kbd class="kbd">↓</kbd> {t("cmdk.hintNav")}</span>
+        <span class="flex items-center gap-1"><kbd class="kbd">↵</kbd> {t("cmdk.hintOpen")}</span>
       </div>
       <span>tyronnemendoza.com</span>
     </div>
@@ -94,7 +98,7 @@ const commands: Command[] = [
 <button
   id="cmdk-trigger"
   type="button"
-  aria-label="Abrir command palette"
+  aria-label="Open command palette"
   class="fixed bottom-6 right-6 z-40 hidden md:flex items-center gap-2 px-3 py-2 rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/90 backdrop-blur text-[color:var(--color-text-muted)] hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)] transition-colors text-xs font-mono shadow-lg"
 >
   <kbd class="kbd">⌘</kbd>
@@ -106,9 +110,7 @@ const commands: Command[] = [
   const trigger = document.getElementById("cmdk-trigger");
   const input = document.getElementById("cmdk-input") as HTMLInputElement | null;
   const list = document.getElementById("cmdk-list");
-  if (!overlay || !input || !list) {
-    // nothing to wire
-  } else {
+  if (overlay && input && list) {
     const allItems = Array.from(list.querySelectorAll<HTMLElement>(".cmdk-item"));
     let visibleItems: HTMLElement[] = allItems.slice();
     let activeIdx = 0;

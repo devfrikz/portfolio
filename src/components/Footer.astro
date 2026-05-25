@@ -1,5 +1,9 @@
 ---
 import { site } from "../data/site";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const year = new Date().getFullYear();
 ---
 
@@ -9,7 +13,7 @@ const year = new Date().getFullYear();
       © {year} {site.fullName}
     </p>
     <p class="font-mono text-xs">
-      Built with Astro · Hosted on Cloudflare Pages
+      {t("footer.builtWith")}
     </p>
   </div>
 </footer>

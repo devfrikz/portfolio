@@ -1,5 +1,9 @@
 ---
 import { site } from "../data/site";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section id="contact" class="max-w-5xl mx-auto px-6 py-24">
@@ -7,9 +11,9 @@ import { site } from "../data/site";
     $ echo $CONTACT
   </p>
 
-  <h2 class="text-3xl md:text-4xl font-bold mb-4">¿Hablamos?</h2>
+  <h2 class="text-3xl md:text-4xl font-bold mb-4">{t("contact.title")}</h2>
   <p class="text-[color:var(--color-text-muted)] text-lg max-w-2xl mb-12 leading-relaxed">
-    {site.availability.note} Respondo en menos de 24h.
+    {t("contact.intro")}
   </p>
 
   <div class="grid sm:grid-cols-3 gap-4">
@@ -17,7 +21,7 @@ import { site } from "../data/site";
       href={site.social.email}
       class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 hover:border-[color:var(--color-accent)] transition-colors group"
     >
-      <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">EMAIL</p>
+      <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">{t("contact.labelEmail")}</p>
       <p class="text-sm group-hover:text-[color:var(--color-accent)] transition-colors break-all">
         {site.email}
       </p>
@@ -29,7 +33,7 @@ import { site } from "../data/site";
       rel="noopener noreferrer"
       class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 hover:border-[color:var(--color-accent)] transition-colors group"
     >
-      <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">LINKEDIN</p>
+      <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">{t("contact.labelLinkedIn")}</p>
       <p class="text-sm group-hover:text-[color:var(--color-accent)] transition-colors">
         /in/devfrikkz
       </p>
@@ -41,7 +45,7 @@ import { site } from "../data/site";
       rel="noopener noreferrer"
       class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 hover:border-[color:var(--color-accent)] transition-colors group"
     >
-      <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">GITHUB</p>
+      <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">{t("contact.labelGitHub")}</p>
       <p class="text-sm group-hover:text-[color:var(--color-accent)] transition-colors">
         @devfrikz
       </p>

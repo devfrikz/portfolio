@@ -1,58 +1,28 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import Reveal from "../components/Reveal.astro";
-import CommandPalette from "../components/CommandPalette.astro";
-import { site } from "../data/site";
-import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/utils";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Reveal from "../../components/Reveal.astro";
+import CommandPalette from "../../components/CommandPalette.astro";
+import { site } from "../../data/site";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const cvDescFullstack = lang === "es"
-  ? "Backend Java/Spring · Frontend React/Vue · DBs"
-  : "Backend Java/Spring · Frontend React/Vue · DBs";
+const cvDescFullstack = "Backend Java/Spring · Frontend React/Vue · DBs";
 const cvDescDevopsEs = "Kubernetes · AWS · Azure · Terraform · Observabilidad";
 const cvDescDevopsEn = "Kubernetes · AWS · Azure · Terraform · Observability";
 
 const cvs = [
-  {
-    profile: "Full Stack",
-    cvLang: "ES",
-    langLabel: t("cv.langES"),
-    description: cvDescFullstack,
-    href: site.cvs.fullstackEs,
-    flag: "🇪🇸",
-  },
-  {
-    profile: "Full Stack",
-    cvLang: "EN",
-    langLabel: t("cv.langEN"),
-    description: cvDescFullstack,
-    href: site.cvs.fullstackEn,
-    flag: "🇬🇧",
-  },
-  {
-    profile: "SRE / DevOps",
-    cvLang: "ES",
-    langLabel: t("cv.langES"),
-    description: cvDescDevopsEs,
-    href: site.cvs.devopsEs,
-    flag: "🇪🇸",
-  },
-  {
-    profile: "SRE / DevOps",
-    cvLang: "EN",
-    langLabel: t("cv.langEN"),
-    description: cvDescDevopsEn,
-    href: site.cvs.devopsEn,
-    flag: "🇬🇧",
-  },
+  { profile: "Full Stack", cvLang: "ES", langLabel: t("cv.langES"), description: cvDescFullstack, href: site.cvs.fullstackEs, flag: "🇪🇸" },
+  { profile: "Full Stack", cvLang: "EN", langLabel: t("cv.langEN"), description: cvDescFullstack, href: site.cvs.fullstackEn, flag: "🇬🇧" },
+  { profile: "SRE / DevOps", cvLang: "ES", langLabel: t("cv.langES"), description: cvDescDevopsEs, href: site.cvs.devopsEs, flag: "🇪🇸" },
+  { profile: "SRE / DevOps", cvLang: "EN", langLabel: t("cv.langEN"), description: cvDescDevopsEn, href: site.cvs.devopsEn, flag: "🇬🇧" },
 ];
 ---
 
-<BaseLayout title={t("cv.title")} description={t("cv.intro")} path="/cv">
+<BaseLayout title={t("cv.title")} description={t("cv.intro")} path="/en/cv">
   <Header />
 
   <main>
@@ -65,20 +35,14 @@ const cvs = [
           {t("cv.back")}
         </a>
 
-        <p class="font-mono text-sm text-[color:var(--color-accent)] mb-4">
-          $ ls -la ~/cv/
-        </p>
+        <p class="font-mono text-sm text-[color:var(--color-accent)] mb-4">$ ls -la ~/cv/</p>
 
-        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
-          {t("cv.title")}
-        </h1>
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">{t("cv.title")}</h1>
 
         <p class="text-lg md:text-xl text-[color:var(--color-text-muted)] mb-2 max-w-3xl leading-relaxed">
           {t("cv.intro")}
         </p>
-        <p class="text-sm text-[color:var(--color-text-subtle)] max-w-3xl">
-          {t("cv.subintro")}
-        </p>
+        <p class="text-sm text-[color:var(--color-text-subtle)] max-w-3xl">{t("cv.subintro")}</p>
       </div>
     </section>
 
@@ -105,9 +69,7 @@ const cvs = [
                 </span>
               </div>
 
-              <p class="text-sm text-[color:var(--color-text-muted)] mb-6 leading-relaxed">
-                {cv.description}
-              </p>
+              <p class="text-sm text-[color:var(--color-text-muted)] mb-6 leading-relaxed">{cv.description}</p>
 
               <div class="flex items-center justify-between font-mono text-sm">
                 <span class="text-[color:var(--color-text-subtle)] truncate">
@@ -122,8 +84,7 @@ const cvs = [
         </div>
 
         <p class="mt-8 font-mono text-xs text-[color:var(--color-text-subtle)] text-center">
-          {t("cv.note.lead")}
-          {" "}
+          {t("cv.note.lead")}{" "}
           <a href={site.social.email} class="text-[color:var(--color-accent)] hover:underline">
             {t("cv.note.cta")}
           </a>.

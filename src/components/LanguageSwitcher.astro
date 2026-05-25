@@ -1,0 +1,45 @@
+---
+import type { Lang } from "../i18n/ui";
+import { switchLangPath } from "../i18n/utils";
+
+interface Props {
+  currentLang: Lang;
+  currentPath: string;
+}
+
+const { currentLang, currentPath } = Astro.props;
+
+const esPath = switchLangPath(currentPath, currentLang, "es");
+const enPath = switchLangPath(currentPath, currentLang, "en");
+---
+
+<div
+  class="flex items-center gap-0.5 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/40 p-0.5 font-mono text-xs"
+  role="group"
+  aria-label="Language"
+>
+  <a
+    href={esPath}
+    aria-current={currentLang === "es" ? "true" : undefined}
+    class:list={[
+      "px-2 py-1 rounded transition-colors",
+      currentLang === "es"
+        ? "bg-[color:var(--color-accent)] text-[color:var(--color-bg)]"
+        : "text-[color:var(--color-text-muted)] hover:text-[color:var(--color-text)]",
+    ]}
+  >
+    ES
+  </a>
+  <a
+    href={enPath}
+    aria-current={currentLang === "en" ? "true" : undefined}
+    class:list={[
+      "px-2 py-1 rounded transition-colors",
+      currentLang === "en"
+        ? "bg-[color:var(--color-accent)] text-[color:var(--color-bg)]"
+        : "text-[color:var(--color-text-muted)] hover:text-[color:var(--color-text)]",
+    ]}
+  >
+    EN
+  </a>
+</div>

@@ -1,6 +1,10 @@
 ---
-import { site } from "../data/site";
+import { site, pick } from "../data/site";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../i18n/utils";
 import StatBox from "./StatBox.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section id="hero" class="relative overflow-hidden bg-dot-grid-fade">
@@ -9,13 +13,13 @@ import StatBox from "./StatBox.astro";
     <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mb-10 font-mono text-xs text-[color:var(--color-text-subtle)]">
       <span class="flex items-center gap-2 text-[color:var(--color-text-muted)]">
         <span class="status-dot"></span>
-        <span>Available for hire</span>
+        <span>{t("hero.statusAvailable")}</span>
       </span>
       <span class="hidden sm:inline">·</span>
-      <span>{site.location}</span>
+      <span>{pick(site.location, lang)}</span>
       <span class="hidden sm:inline">·</span>
       <span class="hidden sm:inline">
-        <kbd class="kbd">⌘</kbd> <kbd class="kbd">K</kbd> command palette
+        <kbd class="kbd">⌘</kbd> <kbd class="kbd">K</kbd> {t("hero.cmdHint")}
       </span>
     </div>
 
@@ -38,35 +42,35 @@ import StatBox from "./StatBox.astro";
         </h1>
 
         <p class="text-xl md:text-2xl text-[color:var(--color-text)] mb-6 font-medium">
-          {site.title}
+          {pick(site.title, lang)}
         </p>
 
         <p class="text-base md:text-lg text-[color:var(--color-text-muted)] mb-10 leading-relaxed max-w-xl">
-          {site.bio}
+          {pick(site.bio, lang)}
         </p>
 
         <!-- Stats grid -->
         <div class="grid grid-cols-3 sm:grid-cols-5 gap-x-5 gap-y-4 mb-10 py-6 border-y border-[color:var(--color-border)]">
-          <StatBox value={12} suffix="y" label="Experiencia" />
-          <StatBox value={20} suffix="+" label="Microservicios" />
-          <StatBox value={99.2} suffix="%" decimals={1} label="Uptime" />
-          <StatBox value={120} suffix="k+" label="Usuarios" />
-          <StatBox value={22} label="Team lead" />
+          <StatBox value={12} suffix="y" label={t("hero.statHeroExp")} />
+          <StatBox value={20} suffix="+" label={t("hero.statHeroSvcs")} />
+          <StatBox value={99.2} suffix="%" decimals={1} label={t("hero.statHeroUptime")} />
+          <StatBox value={120} suffix="k+" label={t("hero.statHeroUsers")} />
+          <StatBox value={22} label={t("hero.statHeroTeam")} />
         </div>
 
         <!-- CTAs -->
         <div class="flex flex-wrap gap-4">
           <a
-            href="#projects"
+            href={getLocalizedPath("/#projects", lang)}
             class="px-6 py-3 rounded-md bg-[color:var(--color-accent)] text-[color:var(--color-bg)] font-medium hover:bg-[color:var(--color-accent-hover)] transition-colors"
           >
-            Ver proyectos →
+            {t("hero.ctaProjects")}
           </a>
           <a
-            href="/cv"
+            href={getLocalizedPath("/cv", lang)}
             class="px-6 py-3 rounded-md border border-[color:var(--color-border)] text-[color:var(--color-text)] hover:border-[color:var(--color-accent)] transition-colors"
           >
-            ↓ Descargar CV
+            {t("hero.ctaCV")}
           </a>
         </div>
       </div>
@@ -92,7 +96,6 @@ import StatBox from "./StatBox.astro";
               <span class="text-[color:var(--color-text)]">neofetch</span>
             </p>
 
-            <!-- Avatar + identity row -->
             <div class="pt-3 flex items-start gap-4 mb-4">
               <img
                 src="/images/tyronne-sketch.png"
@@ -146,7 +149,7 @@ import StatBox from "./StatBox.astro";
               <span class="text-[color:var(--color-accent)]">STATUS</span>
               <span class="text-[color:var(--color-success)] flex items-center gap-1.5">
                 <span class="status-dot" style="width:6px;height:6px;"></span>
-                open to roles
+                {t("hero.sysinfoStatus")}
               </span>
             </div>
 
