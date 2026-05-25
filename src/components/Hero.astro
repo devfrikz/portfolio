@@ -1,0 +1,42 @@
+---
+import { site } from "../data/site";
+---
+
+<section id="hero" class="max-w-5xl mx-auto px-6 pt-32 pb-24 md:pt-40 md:pb-32">
+  <p class="font-mono text-sm text-[color:var(--color-accent)] mb-6">
+    $ whoami
+  </p>
+  <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+    {site.name}
+  </h1>
+  <p class="text-xl md:text-2xl text-[color:var(--color-text-muted)] mb-4 max-w-3xl">
+    {site.title}
+  </p>
+  <p class="text-base md:text-lg text-[color:var(--color-text-muted)] max-w-2xl mb-10">
+    {site.tagline}
+  </p>
+  <div class="flex flex-wrap gap-4">
+    <a
+      href="#projects"
+      class="px-6 py-3 rounded-md bg-[color:var(--color-accent)] text-[color:var(--color-bg)] font-medium hover:bg-[color:var(--color-accent-hover)] transition-colors"
+    >
+      Ver proyectos
+    </a>
+    <a
+      href={site.social.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="px-6 py-3 rounded-md border border-[color:var(--color-border)] text-[color:var(--color-text)] hover:border-[color:var(--color-accent)] transition-colors"
+    >
+      LinkedIn
+    </a>
+    <a
+      href={site.social.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="px-6 py-3 rounded-md border border-[color:var(--color-border)] text-[color:var(--color-text)] hover:border-[color:var(--color-accent)] transition-colors"
+    >
+      GitHub
+    </a>
+  </div>
+</section>

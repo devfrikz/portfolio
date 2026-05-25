@@ -1,0 +1,49 @@
+---
+import { site } from "../data/site";
+---
+
+<section id="contact" class="max-w-5xl mx-auto px-6 py-24">
+  <p class="font-mono text-sm text-[color:var(--color-accent)] mb-6">
+    $ echo $CONTACT
+  </p>
+  <h2 class="text-3xl md:text-4xl font-bold mb-4">¿Hablamos?</h2>
+  <p class="text-[color:var(--color-text-muted)] text-lg max-w-2xl mb-12">
+    Disponible para proyectos freelance, consultorías y oportunidades remote-first. Respondo en menos de 24h.
+  </p>
+
+  <div class="grid sm:grid-cols-3 gap-4">
+    <a
+      href={site.social.email}
+      class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 hover:border-[color:var(--color-accent)] transition-colors group"
+    >
+      <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">EMAIL</p>
+      <p class="text-sm group-hover:text-[color:var(--color-accent)] transition-colors break-all">
+        {site.email}
+      </p>
+    </a>
+
+    <a
+      href={site.social.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 hover:border-[color:var(--color-accent)] transition-colors group"
+    >
+      <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">LINKEDIN</p>
+      <p class="text-sm group-hover:text-[color:var(--color-accent)] transition-colors">
+        /in/tyronnemendoza
+      </p>
+    </a>
+
+    <a
+      href={site.social.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 hover:border-[color:var(--color-accent)] transition-colors group"
+    >
+      <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">GITHUB</p>
+      <p class="text-sm group-hover:text-[color:var(--color-accent)] transition-colors">
+        @devfrikz
+      </p>
+    </a>
+  </div>
+</section>

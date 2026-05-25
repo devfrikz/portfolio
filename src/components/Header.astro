@@ -1,0 +1,22 @@
+---
+import { site } from "../data/site";
+---
+
+<header class="sticky top-0 z-50 backdrop-blur-md bg-[color:var(--color-bg)]/80 border-b border-[color:var(--color-border)]">
+  <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#hero" class="font-mono text-sm font-semibold text-[color:var(--color-accent)]">
+      ~/{site.name.toLowerCase().replace(" ", "")}
+    </a>
+    <ul class="hidden md:flex items-center gap-8 text-sm text-[color:var(--color-text-muted)]">
+      <li><a href="#about" class="hover:text-[color:var(--color-text)] transition-colors">About</a></li>
+      <li><a href="#projects" class="hover:text-[color:var(--color-text)] transition-colors">Proyectos</a></li>
+      <li><a href="#contact" class="hover:text-[color:var(--color-text)] transition-colors">Contacto</a></li>
+    </ul>
+    <a
+      href={site.social.email}
+      class="text-sm px-4 py-2 rounded-md bg-[color:var(--color-accent)] text-[color:var(--color-bg)] font-medium hover:bg-[color:var(--color-accent-hover)] transition-colors"
+    >
+      Hablemos
+    </a>
+  </nav>
+</header>
