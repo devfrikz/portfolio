@@ -1,0 +1,22 @@
+---
+import CountUp from "./CountUp.astro";
+
+interface Props {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  decimals?: number;
+  label: string;
+}
+
+const { value, suffix = "", prefix = "", decimals = 0, label } = Astro.props;
+---
+
+<div class="flex flex-col items-start justify-center gap-1">
+  <span class="font-mono text-2xl md:text-[28px] font-semibold text-[color:var(--color-text)] tabular-nums leading-none">
+    <CountUp value={value} suffix={suffix} prefix={prefix} decimals={decimals} />
+  </span>
+  <span class="font-mono text-[10px] text-[color:var(--color-text-subtle)] uppercase tracking-wider leading-tight">
+    {label}
+  </span>
+</div>

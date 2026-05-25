@@ -1,0 +1,139 @@
+---
+import { experience } from "../data/experience";
+
+const countries = [
+  { flag: "🇳🇮", name: "Nicaragua" },
+  { flag: "🇨🇷", name: "Costa Rica" },
+  { flag: "🇨🇴", name: "Colombia" },
+  { flag: "🇺🇸", name: "USA" },
+  { flag: "🇪🇸", name: "España" },
+  { flag: "🇧🇷", name: "Brasil" },
+];
+
+const sectors = [
+  "Gobierno",
+  "Aduanas",
+  "Marketplace",
+  "Marketing digital",
+  "iGaming",
+  "Logística",
+];
+
+const firstYear = 2014;
+const currentYear = new Date().getFullYear();
+---
+
+<section id="experience" class="max-w-5xl mx-auto px-6 py-24">
+  <p class="font-mono text-sm text-[color:var(--color-accent)] mb-6">
+    $ git log --oneline career/
+  </p>
+
+  <h2 class="text-3xl md:text-4xl font-bold mb-4">Trayectoria</h2>
+  <p class="text-[color:var(--color-text-muted)] text-lg max-w-3xl mb-12 leading-relaxed">
+    12 años entre Nicaragua, Costa Rica, Colombia, USA, España y Brasil. Empecé como soporte y crecí hacia desarrollo, infraestructura y liderazgo técnico.
+  </p>
+
+  <!-- Layout 2 cols: timeline a la izq, panel highlights a la der -->
+  <div class="grid lg:grid-cols-[1fr_280px] gap-10 lg:gap-12 items-start">
+    <!-- ─── Timeline ─── -->
+    <ol class="relative border-l border-[color:var(--color-border)] ml-2">
+      {experience.map((item) => (
+        <li class="relative pl-6 sm:pl-8 py-4 group">
+          <span
+            class={`absolute -left-[5px] top-6 w-[10px] h-[10px] rounded-full border-2 ${
+              item.current
+                ? "bg-[color:var(--color-success)] border-[color:var(--color-bg)]"
+                : item.highlight
+                  ? "bg-[color:var(--color-accent)] border-[color:var(--color-bg)]"
+                  : "bg-[color:var(--color-border-strong)] border-[color:var(--color-bg)]"
+            }`}
+            aria-hidden="true"
+          ></span>
+
+          <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+            <div>
+              <h3 class={`text-base font-semibold ${item.highlight ? "text-[color:var(--color-text)]" : "text-[color:var(--color-text-muted)]"}`}>
+                {item.company}
+                {item.current && (
+                  <span class="ml-2 inline-flex items-center gap-1 align-middle text-[10px] font-mono text-[color:var(--color-success)] uppercase tracking-wider">
+                    <span class="status-dot" style="width:6px;height:6px;"></span>
+                    Activo
+                  </span>
+                )}
+              </h3>
+              <p class="text-sm text-[color:var(--color-text-muted)]">{item.role}</p>
+            </div>
+            <div class="flex flex-col sm:items-end font-mono text-xs text-[color:var(--color-text-subtle)]">
+              <span>{item.period}</span>
+              <span>{item.location}</span>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <!-- ─── Panel highlights ─── -->
+    <aside class="lg:sticky lg:top-24 space-y-6">
+      <!-- Stats -->
+      <div class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/60 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-wider text-[color:var(--color-accent)] mb-4">
+          ─ Stats
+        </p>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="flex flex-col gap-0.5">
+            <span class="font-mono text-xl font-semibold text-[color:var(--color-text)]">9</span>
+            <span class="font-mono text-[10px] text-[color:var(--color-text-subtle)]">empresas</span>
+          </div>
+          <div class="flex flex-col gap-0.5">
+            <span class="font-mono text-xl font-semibold text-[color:var(--color-text)]">6</span>
+            <span class="font-mono text-[10px] text-[color:var(--color-text-subtle)]">países</span>
+          </div>
+          <div class="flex flex-col gap-0.5">
+            <span class="font-mono text-xl font-semibold text-[color:var(--color-text)]">12y</span>
+            <span class="font-mono text-[10px] text-[color:var(--color-text-subtle)]">en TI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Países -->
+      <div class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/60 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-wider text-[color:var(--color-accent)] mb-4">
+          ─ Países
+        </p>
+        <ul class="space-y-2">
+          {countries.map((c) => (
+            <li class="flex items-center gap-3 text-sm text-[color:var(--color-text-muted)]">
+              <span class="text-base leading-none">{c.flag}</span>
+              <span class="font-mono text-xs">{c.name}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Sectores -->
+      <div class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/60 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-wider text-[color:var(--color-accent)] mb-4">
+          ─ Sectores
+        </p>
+        <ul class="flex flex-wrap gap-1.5">
+          {sectors.map((s) => (
+            <li class="font-mono text-[10px] px-2 py-1 rounded border border-[color:var(--color-border)] text-[color:var(--color-text-muted)]">
+              {s}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Inicio carrera -->
+      <div class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/60 p-5">
+        <p class="font-mono text-[10px] uppercase tracking-wider text-[color:var(--color-accent)] mb-3">
+          ─ Inicio
+        </p>
+        <p class="font-mono text-sm text-[color:var(--color-text-muted)]">
+          <span class="text-[color:var(--color-text)]">{firstYear}</span>
+          <span class="text-[color:var(--color-text-subtle)]"> → {currentYear}</span>
+        </p>
+      </div>
+    </aside>
+  </div>
+</section>

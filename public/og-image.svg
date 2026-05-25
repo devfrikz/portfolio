@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#ffffff" opacity="0.05"/>
+    </pattern>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#0a0a0b" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0a0a0b" stop-opacity="0.6"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0a0a0b"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect width="1200" height="630" fill="url(#vignette)"/>
+
+  <!-- Top bar: status -->
+  <g transform="translate(80, 70)" font-family="ui-monospace, 'JetBrains Mono', monospace">
+    <circle cx="6" cy="-2" r="6" fill="#22c55e"/>
+    <text x="22" y="3" font-size="18" fill="#a1a1aa">Available for hire</text>
+    <text x="200" y="3" font-size="18" fill="#71717a">·</text>
+    <text x="218" y="3" font-size="18" fill="#a1a1aa">Managua, Nicaragua · Remoto</text>
+  </g>
+
+  <!-- Terminal prompt -->
+  <g transform="translate(80, 150)" font-family="ui-monospace, 'JetBrains Mono', monospace">
+    <text font-size="20" fill="#22d3ee">$ whoami</text>
+    <text y="28" font-size="20" fill="#a1a1aa">&gt; tyronne_mendoza</text>
+  </g>
+
+  <!-- Name -->
+  <text
+    x="80"
+    y="290"
+    font-family="Inter, system-ui, sans-serif"
+    font-size="90"
+    font-weight="800"
+    fill="#f4f4f5"
+    letter-spacing="-2"
+  >Tyronne Mendoza</text>
+
+  <!-- Subtitle -->
+  <text
+    x="80"
+    y="350"
+    font-family="Inter, system-ui, sans-serif"
+    font-size="34"
+    font-weight="500"
+    fill="#f4f4f5"
+  >Senior Full Stack · SRE / DevOps</text>
+
+  <!-- Bio -->
+  <text
+    x="80"
+    y="410"
+    font-family="Inter, system-ui, sans-serif"
+    font-size="22"
+    fill="#a1a1aa"
+  >
+    <tspan x="80" dy="0">12 años operando plataformas críticas en gobierno,</tspan>
+    <tspan x="80" dy="32">aduanas, marketing e iGaming.</tspan>
+  </text>
+
+  <!-- Stats row -->
+  <g transform="translate(80, 510)" font-family="ui-monospace, 'JetBrains Mono', monospace">
+    <line x1="0" y1="-30" x2="1040" y2="-30" stroke="#27272a" stroke-width="1"/>
+
+    <text font-size="32" font-weight="600" fill="#f4f4f5">12y</text>
+    <text y="24" font-size="12" fill="#71717a" letter-spacing="1">EXPERIENCIA</text>
+
+    <text x="200" font-size="32" font-weight="600" fill="#f4f4f5">99.2%</text>
+    <text x="200" y="24" font-size="12" fill="#71717a" letter-spacing="1">UPTIME</text>
+
+    <text x="400" font-size="32" font-weight="600" fill="#f4f4f5">120k+</text>
+    <text x="400" y="24" font-size="12" fill="#71717a" letter-spacing="1">USUARIOS</text>
+
+    <text x="600" font-size="32" font-weight="600" fill="#f4f4f5">20+</text>
+    <text x="600" y="24" font-size="12" fill="#71717a" letter-spacing="1">MICROSERVICIOS</text>
+
+    <text x="850" font-size="32" font-weight="600" fill="#f4f4f5">22</text>
+    <text x="850" y="24" font-size="12" fill="#71717a" letter-spacing="1">TEAM LEAD</text>
+
+    <line x1="0" y1="60" x2="1040" y2="60" stroke="#27272a" stroke-width="1"/>
+  </g>
+
+  <!-- Domain bottom-right -->
+  <text
+    x="1120"
+    y="600"
+    font-family="ui-monospace, 'JetBrains Mono', monospace"
+    font-size="18"
+    fill="#22d3ee"
+    text-anchor="end"
+  >tyronnemendoza.com</text>
+</svg>

@@ -1,0 +1,204 @@
+---
+import { site } from "../data/site";
+import { projects } from "../data/projects";
+
+type Command = {
+  id: string;
+  group: string;
+  label: string;
+  hint?: string;
+  href: string;
+  external?: boolean;
+};
+
+const commands: Command[] = [
+  { id: "home", group: "Navegar", label: "Inicio", hint: "/", href: "/" },
+  { id: "about", group: "Navegar", label: "Sobre mí", hint: "#about", href: "/#about" },
+  { id: "projects", group: "Navegar", label: "Proyectos", hint: "#projects", href: "/#projects" },
+  { id: "contact", group: "Navegar", label: "Contacto", hint: "#contact", href: "/#contact" },
+  { id: "cv", group: "Navegar", label: "CV", hint: "/cv", href: "/cv" },
+
+  ...projects.map((p) => ({
+    id: `project-${p.slug}`,
+    group: "Proyectos",
+    label: p.title,
+    hint: p.jobTitle,
+    href: `/projects/${p.slug}`,
+  })),
+
+  { id: "linkedin", group: "Redes", label: "LinkedIn", hint: "/in/devfrikkz", href: site.social.linkedin, external: true },
+  { id: "github", group: "Redes", label: "GitHub", hint: "@devfrikz", href: site.social.github, external: true },
+  { id: "twitter", group: "Redes", label: "Twitter / X", hint: "@devfrikz", href: site.social.twitter, external: true },
+  { id: "email", group: "Redes", label: "Enviar email", hint: site.email, href: site.social.email },
+];
+---
+
+<div
+  id="cmdk"
+  class="cmdk-overlay"
+  data-open="false"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Command palette"
+>
+  <div class="cmdk-panel" data-stop>
+    <div class="flex items-center gap-3 px-4 py-3 border-b border-[color:var(--color-border)]">
+      <span class="font-mono text-[color:var(--color-accent)] text-sm">›</span>
+      <input
+        id="cmdk-input"
+        type="text"
+        placeholder="Buscar página, proyecto, red..."
+        class="flex-1 bg-transparent outline-none text-[color:var(--color-text)] placeholder:text-[color:var(--color-text-subtle)] font-mono text-sm"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <kbd class="kbd">esc</kbd>
+    </div>
+
+    <ul id="cmdk-list" class="max-h-[60vh] overflow-y-auto py-2" role="listbox">
+      {commands.map((cmd, i) => (
+        <li
+          class="cmdk-item flex items-center justify-between gap-3 px-4 py-2.5 cursor-pointer border-l-2 border-transparent hover:bg-[color:var(--color-surface-hover)] transition-colors"
+          role="option"
+          aria-selected={i === 0 ? "true" : "false"}
+          data-href={cmd.href}
+          data-external={cmd.external ? "true" : "false"}
+          data-label={cmd.label.toLowerCase()}
+          data-group={cmd.group.toLowerCase()}
+          data-hint={(cmd.hint ?? "").toLowerCase()}
+          data-index={i}
+        >
+          <div class="flex flex-col gap-0.5 min-w-0">
+            <span class="text-sm text-[color:var(--color-text)] truncate">{cmd.label}</span>
+            {cmd.hint && (
+              <span class="font-mono text-[10px] text-[color:var(--color-text-subtle)] truncate">
+                {cmd.group} · {cmd.hint}
+              </span>
+            )}
+          </div>
+          <span class="font-mono text-[10px] text-[color:var(--color-text-subtle)] flex-shrink-0">↵</span>
+        </li>
+      ))}
+    </ul>
+
+    <div class="flex items-center justify-between gap-3 px-4 py-2.5 border-t border-[color:var(--color-border)] text-[10px] font-mono text-[color:var(--color-text-subtle)]">
+      <div class="flex items-center gap-3">
+        <span class="flex items-center gap-1"><kbd class="kbd">↑</kbd><kbd class="kbd">↓</kbd> navegar</span>
+        <span class="flex items-center gap-1"><kbd class="kbd">↵</kbd> abrir</span>
+      </div>
+      <span>tyronnemendoza.com</span>
+    </div>
+  </div>
+</div>
+
+<button
+  id="cmdk-trigger"
+  type="button"
+  aria-label="Abrir command palette"
+  class="fixed bottom-6 right-6 z-40 hidden md:flex items-center gap-2 px-3 py-2 rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/90 backdrop-blur text-[color:var(--color-text-muted)] hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)] transition-colors text-xs font-mono shadow-lg"
+>
+  <kbd class="kbd">⌘</kbd>
+  <kbd class="kbd">K</kbd>
+</button>
+
+<script>
+  const overlay = document.getElementById("cmdk");
+  const trigger = document.getElementById("cmdk-trigger");
+  const input = document.getElementById("cmdk-input") as HTMLInputElement | null;
+  const list = document.getElementById("cmdk-list");
+  if (!overlay || !input || !list) {
+    // nothing to wire
+  } else {
+    const allItems = Array.from(list.querySelectorAll<HTMLElement>(".cmdk-item"));
+    let visibleItems: HTMLElement[] = allItems.slice();
+    let activeIdx = 0;
+
+    const setActive = (idx: number) => {
+      if (visibleItems.length === 0) return;
+      activeIdx = (idx + visibleItems.length) % visibleItems.length;
+      allItems.forEach((el) => el.setAttribute("aria-selected", "false"));
+      visibleItems[activeIdx].setAttribute("aria-selected", "true");
+      visibleItems[activeIdx].scrollIntoView({ block: "nearest" });
+    };
+
+    const filter = (q: string) => {
+      const query = q.trim().toLowerCase();
+      visibleItems = allItems.filter((el) => {
+        if (!query) {
+          el.style.display = "";
+          return true;
+        }
+        const label = el.dataset.label ?? "";
+        const group = el.dataset.group ?? "";
+        const hint = el.dataset.hint ?? "";
+        const matches = label.includes(query) || group.includes(query) || hint.includes(query);
+        el.style.display = matches ? "" : "none";
+        return matches;
+      });
+      setActive(0);
+    };
+
+    const open = () => {
+      overlay.setAttribute("data-open", "true");
+      input.value = "";
+      filter("");
+      setTimeout(() => input.focus(), 50);
+    };
+
+    const close = () => {
+      overlay.setAttribute("data-open", "false");
+      input.blur();
+    };
+
+    const isOpen = () => overlay.getAttribute("data-open") === "true";
+
+    const activate = (el: HTMLElement) => {
+      const href = el.dataset.href;
+      const external = el.dataset.external === "true";
+      if (!href) return;
+      if (external) {
+        window.open(href, "_blank", "noopener,noreferrer");
+      } else {
+        window.location.href = href;
+      }
+      close();
+    };
+
+    document.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        isOpen() ? close() : open();
+        return;
+      }
+      if (!isOpen()) return;
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActive(activeIdx + 1);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActive(activeIdx - 1);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (visibleItems[activeIdx]) activate(visibleItems[activeIdx]);
+      }
+    });
+
+    input.addEventListener("input", (e) => filter((e.target as HTMLInputElement).value));
+
+    overlay.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      const item = target.closest<HTMLElement>(".cmdk-item");
+      if (item) {
+        activate(item);
+        return;
+      }
+      if (!target.closest("[data-stop]")) close();
+    });
+
+    trigger?.addEventListener("click", open);
+  }
+</script>

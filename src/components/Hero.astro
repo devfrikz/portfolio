@@ -1,42 +1,201 @@
 ---
 import { site } from "../data/site";
+import StatBox from "./StatBox.astro";
 ---
 
-<section id="hero" class="max-w-5xl mx-auto px-6 pt-32 pb-24 md:pt-40 md:pb-32">
-  <p class="font-mono text-sm text-[color:var(--color-accent)] mb-6">
-    $ whoami
-  </p>
-  <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-    {site.name}
-  </h1>
-  <p class="text-xl md:text-2xl text-[color:var(--color-text-muted)] mb-4 max-w-3xl">
-    {site.title}
-  </p>
-  <p class="text-base md:text-lg text-[color:var(--color-text-muted)] max-w-2xl mb-10">
-    {site.tagline}
-  </p>
-  <div class="flex flex-wrap gap-4">
-    <a
-      href="#projects"
-      class="px-6 py-3 rounded-md bg-[color:var(--color-accent)] text-[color:var(--color-bg)] font-medium hover:bg-[color:var(--color-accent-hover)] transition-colors"
-    >
-      Ver proyectos
-    </a>
-    <a
-      href={site.social.linkedin}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="px-6 py-3 rounded-md border border-[color:var(--color-border)] text-[color:var(--color-text)] hover:border-[color:var(--color-accent)] transition-colors"
-    >
-      LinkedIn
-    </a>
-    <a
-      href={site.social.github}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="px-6 py-3 rounded-md border border-[color:var(--color-border)] text-[color:var(--color-text)] hover:border-[color:var(--color-accent)] transition-colors"
-    >
-      GitHub
-    </a>
+<section id="hero" class="relative overflow-hidden bg-dot-grid-fade">
+  <div class="max-w-5xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
+    <!-- Status bar arriba -->
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mb-10 font-mono text-xs text-[color:var(--color-text-subtle)]">
+      <span class="flex items-center gap-2 text-[color:var(--color-text-muted)]">
+        <span class="status-dot"></span>
+        <span>Available for hire</span>
+      </span>
+      <span class="hidden sm:inline">·</span>
+      <span>{site.location}</span>
+      <span class="hidden sm:inline">·</span>
+      <span class="hidden sm:inline">
+        <kbd class="kbd">⌘</kbd> <kbd class="kbd">K</kbd> command palette
+      </span>
+    </div>
+
+    <!-- Grid 2 cols equilibrado -->
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-12 items-start">
+      <!-- ─── Columna IZQ: identidad ─── -->
+      <div>
+        <!-- Terminal prompt con typing animation -->
+        <div class="font-mono text-sm mb-8 min-h-[3.5rem]">
+          <p class="text-[color:var(--color-accent)]">
+            <span data-typing="$ whoami"></span><span class="caret" data-caret></span>
+          </p>
+          <p class="text-[color:var(--color-text-muted)] mt-1 opacity-0" data-typing-line>
+            &gt; tyronne_mendoza
+          </p>
+        </div>
+
+        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 leading-[0.95]">
+          {site.name}
+        </h1>
+
+        <p class="text-xl md:text-2xl text-[color:var(--color-text)] mb-6 font-medium">
+          {site.title}
+        </p>
+
+        <p class="text-base md:text-lg text-[color:var(--color-text-muted)] mb-10 leading-relaxed max-w-xl">
+          {site.bio}
+        </p>
+
+        <!-- Stats grid -->
+        <div class="grid grid-cols-3 sm:grid-cols-5 gap-x-5 gap-y-4 mb-10 py-6 border-y border-[color:var(--color-border)]">
+          <StatBox value={12} suffix="y" label="Experiencia" />
+          <StatBox value={20} suffix="+" label="Microservicios" />
+          <StatBox value={99.2} suffix="%" decimals={1} label="Uptime" />
+          <StatBox value={120} suffix="k+" label="Usuarios" />
+          <StatBox value={22} label="Team lead" />
+        </div>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="#projects"
+            class="px-6 py-3 rounded-md bg-[color:var(--color-accent)] text-[color:var(--color-bg)] font-medium hover:bg-[color:var(--color-accent-hover)] transition-colors"
+          >
+            Ver proyectos →
+          </a>
+          <a
+            href="/cv"
+            class="px-6 py-3 rounded-md border border-[color:var(--color-border)] text-[color:var(--color-text)] hover:border-[color:var(--color-accent)] transition-colors"
+          >
+            ↓ Descargar CV
+          </a>
+        </div>
+      </div>
+
+      <!-- ─── Columna DER: sys info estilo neofetch ─── -->
+      <aside class="hidden lg:block">
+        <div class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/80 backdrop-blur overflow-hidden shadow-xl">
+          <!-- Title bar -->
+          <div class="flex items-center gap-2 px-4 py-2.5 border-b border-[color:var(--color-border)] bg-[color:var(--color-bg)]/60">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></span>
+            <span class="font-mono text-xs text-[color:var(--color-text-subtle)] ml-2">
+              tyronne@portfolio:~
+            </span>
+          </div>
+
+          <!-- Body -->
+          <div class="p-5 font-mono text-xs space-y-1 leading-relaxed">
+            <p>
+              <span class="text-[color:var(--color-accent)]">tyronne@portfolio</span>
+              <span class="text-[color:var(--color-text-subtle)]">:~$</span>
+              <span class="text-[color:var(--color-text)]">neofetch</span>
+            </p>
+
+            <!-- Avatar + identity row -->
+            <div class="pt-3 flex items-start gap-4 mb-4">
+              <img
+                src="/images/tyronne-sketch.png"
+                alt="Tyronne Mendoza"
+                width="84"
+                height="84"
+                class="w-20 h-20 rounded-md border border-[color:var(--color-border-strong)] object-cover flex-shrink-0"
+                loading="eager"
+              />
+              <div class="min-w-0 flex-1">
+                <p class="text-[color:var(--color-text)] font-semibold text-sm truncate">
+                  tyronne<span class="text-[color:var(--color-accent)]">@</span>managua
+                </p>
+                <p class="text-[color:var(--color-text-subtle)] text-[10px] mt-0.5">
+                  ─────────────────
+                </p>
+                <p class="text-[color:var(--color-text-muted)] text-[10px] mt-1 leading-snug">
+                  Senior Full Stack ·<br />SRE / DevOps
+                </p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5">
+              <span class="text-[color:var(--color-accent)]">OS</span>
+              <span class="text-[color:var(--color-text-muted)]">Linux · Kubuntu</span>
+
+              <span class="text-[color:var(--color-accent)]">HOST</span>
+              <span class="text-[color:var(--color-text-muted)]">Managua, Nicaragua</span>
+
+              <span class="text-[color:var(--color-accent)]">UPTIME</span>
+              <span class="text-[color:var(--color-text-muted)]">12 years in tech</span>
+
+              <span class="text-[color:var(--color-accent)]">SHELL</span>
+              <span class="text-[color:var(--color-text-muted)]">zsh + tmux</span>
+
+              <span class="text-[color:var(--color-accent)]">LANGS</span>
+              <span class="text-[color:var(--color-text-muted)]">Java · TS · Bash · Python</span>
+
+              <span class="text-[color:var(--color-accent)]">FOCUS</span>
+              <span class="text-[color:var(--color-text-muted)]">Spring · K8s · AWS · Terraform</span>
+
+              <span class="text-[color:var(--color-accent)]">CERTS</span>
+              <span class="text-[color:var(--color-text-muted)]">AWS CP + DVA</span>
+
+              <span class="text-[color:var(--color-accent)]">ROLE</span>
+              <span class="text-[color:var(--color-text-muted)]">Tech Lead @ Atomo Gaming</span>
+
+              <span class="text-[color:var(--color-accent)]">TEAM</span>
+              <span class="text-[color:var(--color-text-muted)]">22 personas</span>
+
+              <span class="text-[color:var(--color-accent)]">STATUS</span>
+              <span class="text-[color:var(--color-success)] flex items-center gap-1.5">
+                <span class="status-dot" style="width:6px;height:6px;"></span>
+                open to roles
+              </span>
+            </div>
+
+            <p class="pt-3 text-[color:var(--color-text-subtle)]">
+              <span class="text-[color:var(--color-accent)]">tyronne@portfolio</span>
+              <span>:~$</span>
+              <span class="caret align-baseline"></span>
+            </p>
+          </div>
+        </div>
+      </aside>
+    </div>
   </div>
 </section>
+
+<script>
+  type TypingTarget = HTMLElement;
+
+  const typeOnce = async (el: TypingTarget) => {
+    const text = el.dataset.typing ?? "";
+    el.textContent = "";
+    for (const char of text) {
+      el.textContent += char;
+      await new Promise((r) => setTimeout(r, 55));
+    }
+  };
+
+  const run = async () => {
+    const promptEl = document.querySelector<HTMLElement>("[data-typing]");
+    const responseEl = document.querySelector<HTMLElement>("[data-typing-line]");
+    const caretEl = document.querySelector<HTMLElement>("[data-caret]");
+    if (!promptEl) return;
+
+    await typeOnce(promptEl);
+    await new Promise((r) => setTimeout(r, 250));
+
+    if (responseEl) {
+      responseEl.style.transition = "opacity 0.4s ease-out";
+      responseEl.style.opacity = "1";
+    }
+
+    if (caretEl) {
+      setTimeout(() => caretEl.remove(), 1800);
+    }
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
+  }
+</script>

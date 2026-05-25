@@ -1,0 +1,35 @@
+---
+import { tech } from "../data/tech";
+
+const items = [
+  tech.java, tech.spring, tech.nodejs, tech.typescript, tech.react, tech.vue,
+  tech.kubernetes, tech.docker, tech.aws, tech.azure, tech.terraform, tech.helm,
+  tech.postgresql, tech.mysql, tech.mongodb, tech.redis, tech.rabbitmq, tech.elasticsearch,
+  tech.gitlab, tech.github, tech.linux, tech.prometheus, tech.grafana, tech.nginx,
+];
+
+const doubled = [...items, ...items];
+---
+
+<section
+  aria-label="Tecnologías"
+  class="border-y border-[color:var(--color-border)] bg-[color:var(--color-surface)]/30 py-8 overflow-hidden"
+>
+  <div class="marquee-mask overflow-hidden">
+    <div class="marquee gap-10 px-6">
+      {doubled.map((t) => (
+        <div class="flex items-center gap-3 text-[color:var(--color-text-muted)] flex-shrink-0 group">
+          <img
+            src={t.icon}
+            alt=""
+            loading="lazy"
+            width="20"
+            height="20"
+            class="opacity-60 group-hover:opacity-100 transition-opacity"
+          />
+          <span class="font-mono text-sm whitespace-nowrap">{t.name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

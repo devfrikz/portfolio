@@ -6,70 +6,66 @@ const roleLabel: Record<string, string> = {
   devops: "SRE / DevOps",
   both: "Full Stack + DevOps",
 };
+
+const featured = projects.filter((p) => p.featured);
 ---
 
 <section id="projects" class="max-w-5xl mx-auto px-6 py-24">
   <p class="font-mono text-sm text-[color:var(--color-accent)] mb-6">
     $ ls -la projects/
   </p>
-  <h2 class="text-3xl md:text-4xl font-bold mb-4">Proyectos seleccionados</h2>
-  <p class="text-[color:var(--color-text-muted)] text-lg max-w-2xl mb-12">
-    Casos reales (anonimizados cuando aplica NDA). Cada uno incluye el problema, la solución y el impacto medible.
+
+  <h2 class="text-3xl md:text-4xl font-bold mb-4">
+    Proyectos seleccionados
+  </h2>
+  <p class="text-[color:var(--color-text-muted)] text-lg max-w-3xl mb-12 leading-relaxed">
+    Cuatro casos reales con métricas. Click en cualquiera para ver el case study completo: problema, solución, impacto y stack.
   </p>
 
   <div class="grid gap-6">
-    {projects.map((project) => (
-      <article class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-8 hover:border-[color:var(--color-accent)] transition-colors group">
+    {featured.map((project) => (
+      <a
+        href={`/projects/${project.slug}`}
+        class="block rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-8 hover:border-[color:var(--color-accent)] transition-colors group"
+      >
         <div class="flex items-start justify-between gap-4 mb-3 flex-wrap">
-          <h3 class="text-xl font-semibold group-hover:text-[color:var(--color-accent)] transition-colors">
-            {project.title}
-          </h3>
-          <span class="font-mono text-xs px-3 py-1 rounded-full border border-[color:var(--color-border)] text-[color:var(--color-text-muted)]">
+          <div>
+            <h3 class="text-xl font-semibold group-hover:text-[color:var(--color-accent)] transition-colors">
+              {project.title}
+            </h3>
+            {project.client && (
+              <p class="font-mono text-xs text-[color:var(--color-text-subtle)] mt-1">
+                {project.client} · {project.period}
+              </p>
+            )}
+          </div>
+          <span class="font-mono text-xs px-3 py-1 rounded-full border border-[color:var(--color-border)] text-[color:var(--color-text-muted)] flex-shrink-0">
             {roleLabel[project.role]}
           </span>
         </div>
 
-        {project.client && (
-          <p class="font-mono text-xs text-[color:var(--color-text-muted)] mb-4">
-            {project.client}
-          </p>
-        )}
+        <p class="text-[color:var(--color-text-muted)] mb-6 leading-relaxed">
+          {project.summary}
+        </p>
 
-        <p class="text-[color:var(--color-text-muted)] mb-4">{project.description}</p>
-
-        <div class="grid sm:grid-cols-2 gap-4 mb-6 text-sm">
-          <div>
-            <p class="font-mono text-xs text-[color:var(--color-accent)] mb-1">PROBLEMA</p>
-            <p class="text-[color:var(--color-text-muted)]">{project.problem}</p>
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div class="flex flex-wrap gap-2">
+            {project.stack.slice(0, 6).map((tech) => (
+              <span class="font-mono text-xs px-2 py-1 rounded bg-[color:var(--color-bg)] text-[color:var(--color-text-muted)]">
+                {tech}
+              </span>
+            ))}
+            {project.stack.length > 6 && (
+              <span class="font-mono text-xs px-2 py-1 text-[color:var(--color-text-subtle)]">
+                +{project.stack.length - 6} más
+              </span>
+            )}
           </div>
-          <div>
-            <p class="font-mono text-xs text-[color:var(--color-accent)] mb-1">SOLUCIÓN</p>
-            <p class="text-[color:var(--color-text-muted)]">{project.solution}</p>
-          </div>
+          <span class="font-mono text-sm text-[color:var(--color-accent)] group-hover:translate-x-1 transition-transform">
+            Ver case study →
+          </span>
         </div>
-
-        {project.impact && project.impact.length > 0 && (
-          <div class="mb-6">
-            <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">IMPACTO</p>
-            <ul class="space-y-1">
-              {project.impact.map((item) => (
-                <li class="text-sm text-[color:var(--color-text-muted)] flex items-start gap-2">
-                  <span class="text-[color:var(--color-accent)] mt-1">→</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <div class="flex flex-wrap gap-2">
-          {project.stack.map((tech) => (
-            <span class="font-mono text-xs px-2 py-1 rounded bg-[color:var(--color-bg)] text-[color:var(--color-text-muted)]">
-              {tech}
-            </span>
-          ))}
-        </div>
-      </article>
+      </a>
     ))}
   </div>
 </section>

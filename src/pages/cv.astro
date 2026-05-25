@@ -1,0 +1,129 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Reveal from "../components/Reveal.astro";
+import CommandPalette from "../components/CommandPalette.astro";
+import { site } from "../data/site";
+
+const cvs = [
+  {
+    profile: "Full Stack",
+    lang: "ES",
+    description: "Backend Java/Spring · Frontend React/Vue · DBs",
+    href: site.cvs.fullstackEs,
+    flag: "🇪🇸",
+  },
+  {
+    profile: "Full Stack",
+    lang: "EN",
+    description: "Backend Java/Spring · Frontend React/Vue · DBs",
+    href: site.cvs.fullstackEn,
+    flag: "🇬🇧",
+  },
+  {
+    profile: "SRE / DevOps",
+    lang: "ES",
+    description: "Kubernetes · AWS · Azure · Terraform · Observabilidad",
+    href: site.cvs.devopsEs,
+    flag: "🇪🇸",
+  },
+  {
+    profile: "SRE / DevOps",
+    lang: "EN",
+    description: "Kubernetes · AWS · Azure · Terraform · Observability",
+    href: site.cvs.devopsEn,
+    flag: "🇬🇧",
+  },
+];
+---
+
+<BaseLayout
+  title="CV — Descargas"
+  description="CVs descargables de Tyronne Mendoza en español e inglés, perfiles Full Stack y SRE/DevOps."
+  path="/cv"
+>
+  <Header />
+
+  <main>
+    <!-- ─── Hero ─── -->
+    <section class="relative overflow-hidden bg-dot-grid-fade border-b border-[color:var(--color-border)]">
+      <div class="max-w-5xl mx-auto px-6 pt-24 pb-16 md:pt-32 md:pb-20">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 font-mono text-xs text-[color:var(--color-text-muted)] hover:text-[color:var(--color-accent)] transition-colors mb-8"
+        >
+          ← cd ~
+        </a>
+
+        <p class="font-mono text-sm text-[color:var(--color-accent)] mb-4">
+          $ ls -la ~/cv/
+        </p>
+
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+          Curriculum Vitae
+        </h1>
+
+        <p class="text-lg md:text-xl text-[color:var(--color-text-muted)] mb-2 max-w-3xl leading-relaxed">
+          4 versiones para que elijas la que mejor encaje con tu búsqueda.
+        </p>
+        <p class="text-sm text-[color:var(--color-text-subtle)] max-w-3xl">
+          Dos perfiles (Full Stack y SRE/DevOps), dos idiomas (español e inglés).
+        </p>
+      </div>
+    </section>
+
+    <!-- ─── Grid de descargas ─── -->
+    <Reveal>
+      <section class="max-w-5xl mx-auto px-6 py-16">
+        <div class="grid sm:grid-cols-2 gap-4">
+          {cvs.map((cv) => (
+            <a
+              href={cv.href}
+              download
+              class="group rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 hover:border-[color:var(--color-accent)] transition-colors"
+            >
+              <div class="flex items-start justify-between gap-4 mb-4">
+                <div>
+                  <p class="font-mono text-[10px] uppercase tracking-wider text-[color:var(--color-text-subtle)] mb-1">
+                    {cv.flag} {cv.lang === "ES" ? "Español" : "English"}
+                  </p>
+                  <h2 class="text-xl font-semibold text-[color:var(--color-text)] group-hover:text-[color:var(--color-accent)] transition-colors">
+                    {cv.profile}
+                  </h2>
+                </div>
+                <span class="font-mono text-xs px-2 py-1 rounded border border-[color:var(--color-border)] text-[color:var(--color-text-muted)] flex-shrink-0">
+                  PDF
+                </span>
+              </div>
+
+              <p class="text-sm text-[color:var(--color-text-muted)] mb-6 leading-relaxed">
+                {cv.description}
+              </p>
+
+              <div class="flex items-center justify-between font-mono text-sm">
+                <span class="text-[color:var(--color-text-subtle)] truncate">
+                  cv-{cv.profile.toLowerCase().replace(/[^a-z]/g, "")}-{cv.lang.toLowerCase()}.pdf
+                </span>
+                <span class="text-[color:var(--color-accent)] group-hover:translate-y-0.5 transition-transform flex-shrink-0 ml-2">
+                  ↓ Descargar
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <!-- Nota: archivos pendientes -->
+        <p class="mt-8 font-mono text-xs text-[color:var(--color-text-subtle)] text-center">
+          ¿Necesitas un formato específico o una versión adaptada?
+          <a href={site.social.email} class="text-[color:var(--color-accent)] hover:underline">
+            Escribime
+          </a>.
+        </p>
+      </section>
+    </Reveal>
+  </main>
+
+  <Footer />
+  <CommandPalette />
+</BaseLayout>

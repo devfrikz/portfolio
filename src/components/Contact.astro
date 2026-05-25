@@ -6,9 +6,10 @@ import { site } from "../data/site";
   <p class="font-mono text-sm text-[color:var(--color-accent)] mb-6">
     $ echo $CONTACT
   </p>
+
   <h2 class="text-3xl md:text-4xl font-bold mb-4">¿Hablamos?</h2>
-  <p class="text-[color:var(--color-text-muted)] text-lg max-w-2xl mb-12">
-    Disponible para proyectos freelance, consultorías y oportunidades remote-first. Respondo en menos de 24h.
+  <p class="text-[color:var(--color-text-muted)] text-lg max-w-2xl mb-12 leading-relaxed">
+    {site.availability.note} Respondo en menos de 24h.
   </p>
 
   <div class="grid sm:grid-cols-3 gap-4">
@@ -30,7 +31,7 @@ import { site } from "../data/site";
     >
       <p class="font-mono text-xs text-[color:var(--color-accent)] mb-2">LINKEDIN</p>
       <p class="text-sm group-hover:text-[color:var(--color-accent)] transition-colors">
-        /in/tyronnemendoza
+        /in/devfrikkz
       </p>
     </a>
 

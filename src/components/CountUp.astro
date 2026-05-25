@@ -1,0 +1,67 @@
+---
+interface Props {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  decimals?: number;
+  duration?: number;
+  class?: string;
+}
+
+const {
+  value,
+  suffix = "",
+  prefix = "",
+  decimals = 0,
+  duration = 1400,
+  class: className = "",
+} = Astro.props;
+---
+
+<span
+  class={`count-up ${className}`}
+  data-value={value}
+  data-decimals={decimals}
+  data-duration={duration}
+  data-prefix={prefix}
+  data-suffix={suffix}
+>
+  {prefix}0{decimals > 0 ? `.${"0".repeat(decimals)}` : ""}{suffix}
+</span>
+
+<script>
+  const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
+
+  const animate = (el: HTMLElement) => {
+    const value = parseFloat(el.dataset.value ?? "0");
+    const decimals = parseInt(el.dataset.decimals ?? "0", 10);
+    const duration = parseInt(el.dataset.duration ?? "1400", 10);
+    const prefix = el.dataset.prefix ?? "";
+    const suffix = el.dataset.suffix ?? "";
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const current = value * easeOutQuart(progress);
+      el.textContent = `${prefix}${current.toFixed(decimals)}${suffix}`;
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+
+    requestAnimationFrame(tick);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          animate(entry.target as HTMLElement);
+          observer.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0.4 }
+  );
+
+  document.querySelectorAll(".count-up").forEach((el) => observer.observe(el));
+</script>

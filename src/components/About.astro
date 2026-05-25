@@ -1,50 +1,79 @@
 ---
+import { site } from "../data/site";
+import { tech } from "../data/tech";
+
 const fullstack = {
-  title: "Full Stack Senior",
+  title: "Senior Full Stack",
   description:
-    "Diseño y construyo APIs y aplicaciones web de extremo a extremo, desde el modelo de datos hasta la UI.",
-  stack: [
-    "Java 17+ / Spring Boot 4",
-    "TypeScript / React 19 / Vue 3",
-    "PostgreSQL / MySQL / MongoDB / Redis",
-    "Gradle / Vite / Bun",
-    "REST · GraphQL · Server-Sent Events",
+    "Construyo APIs y aplicaciones web de extremo a extremo: del modelo de datos hasta la UI. Backend pesado en Java/Spring, frontend en React o Vue.",
+  techs: [
+    tech.java, tech.spring, tech.nodejs,
+    tech.typescript, tech.react, tech.vue,
+    tech.postgresql, tech.mysql, tech.mongodb,
+    tech.redis, tech.rabbitmq, tech.elasticsearch,
   ],
 };
 
 const devops = {
-  title: "SRE / DevOps Senior",
+  title: "Senior SRE / DevOps",
   description:
-    "Llevo plataformas a producción de forma confiable: contenedores, orquestación, observabilidad y automatización.",
-  stack: [
-    "Kubernetes (EKS, AKS)",
-    "AWS · Azure",
-    "Terraform · Helm · ArgoCD",
-    "GitLab CI/CD · GitHub Actions",
-    "Prometheus · Grafana · Metabase",
+    "Llevo plataformas a producción de forma confiable: contenedores, orquestación, IaC y observabilidad. Linux como base hace 10 años.",
+  techs: [
+    tech.kubernetes, tech.docker, tech.aws,
+    tech.azure, tech.terraform, tech.helm,
+    tech.ansible, tech.gitlab, tech.github,
+    tech.prometheus, tech.grafana, tech.linux,
   ],
 };
+
+const profiles = [fullstack, devops];
 ---
 
 <section id="about" class="max-w-5xl mx-auto px-6 py-24">
   <p class="font-mono text-sm text-[color:var(--color-accent)] mb-6">
     $ cat about.md
   </p>
-  <h2 class="text-3xl md:text-4xl font-bold mb-4">Dos perfiles, un mismo workflow</h2>
-  <p class="text-[color:var(--color-text-muted)] text-lg max-w-2xl mb-12">
-    Trabajo en el cruce entre desarrollo y operaciones. Construyo el sistema y lo opero — entiendo qué falla en producción porque también lo escribí.
+
+  <h2 class="text-3xl md:text-4xl font-bold mb-4">
+    Dos perfiles, un mismo workflow
+  </h2>
+  <p class="text-[color:var(--color-text-muted)] text-lg max-w-3xl mb-10 leading-relaxed">
+    {site.about}
   </p>
 
+  <ul class="grid sm:grid-cols-2 gap-3 mb-14 max-w-3xl">
+    {site.highlights.map((item) => (
+      <li class="flex items-start gap-3 text-sm text-[color:var(--color-text-muted)]">
+        <span class="font-mono text-[color:var(--color-accent)] mt-0.5 flex-shrink-0">›</span>
+        <span>{item}</span>
+      </li>
+    ))}
+  </ul>
+
   <div class="grid md:grid-cols-2 gap-6">
-    {[fullstack, devops].map((profile) => (
+    {profiles.map((profile) => (
       <article class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-8 hover:border-[color:var(--color-accent)] transition-colors">
         <h3 class="text-xl font-semibold mb-3">{profile.title}</h3>
-        <p class="text-[color:var(--color-text-muted)] mb-6">{profile.description}</p>
-        <ul class="space-y-2">
-          {profile.stack.map((item) => (
-            <li class="font-mono text-sm text-[color:var(--color-text-muted)] flex items-start gap-2">
-              <span class="text-[color:var(--color-accent)] mt-1">›</span>
-              <span>{item}</span>
+        <p class="text-[color:var(--color-text-muted)] mb-6 leading-relaxed">
+          {profile.description}
+        </p>
+        <ul class="grid grid-cols-3 sm:grid-cols-4 gap-3">
+          {profile.techs.map((t) => (
+            <li
+              class="flex flex-col items-center justify-center gap-2 p-3 rounded-md bg-[color:var(--color-bg)]/60 border border-transparent hover:border-[color:var(--color-border-strong)] transition-colors group aspect-square"
+              title={t.name}
+            >
+              <img
+                src={t.icon}
+                alt={t.name}
+                loading="lazy"
+                width="28"
+                height="28"
+                class="opacity-75 group-hover:opacity-100 transition-opacity"
+              />
+              <span class="font-mono text-[9px] text-[color:var(--color-text-subtle)] text-center leading-tight">
+                {t.name}
+              </span>
             </li>
           ))}
         </ul>
