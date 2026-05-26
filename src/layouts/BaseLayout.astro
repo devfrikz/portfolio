@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import { site, pick } from "../data/site";
 import { getLangFromUrl } from "../i18n/utils";
+import BackToTop from "../components/BackToTop.astro";
 
 interface Props {
   title?: string;
@@ -63,5 +64,6 @@ const altUrl = `https://tyronnemendoza.com${altPath}`;
   </head>
   <body class="min-h-screen antialiased">
     <slot />
+    <BackToTop />
   </body>
 </html>

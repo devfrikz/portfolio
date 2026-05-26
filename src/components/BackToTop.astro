@@ -1,0 +1,39 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const label = lang === "es" ? "Volver arriba" : "Back to top";
+---
+
+<button
+  id="back-to-top"
+  type="button"
+  aria-label={label}
+  title={label}
+  class="fixed bottom-6 right-6 md:bottom-20 z-40 flex items-center justify-center w-10 h-10 rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/90 backdrop-blur text-[color:var(--color-text-muted)] hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)] transition-all font-mono text-base shadow-lg opacity-0 pointer-events-none translate-y-2"
+>
+  ↑
+</button>
+
+<script>
+  const btn = document.getElementById("back-to-top");
+  if (btn) {
+    const onScroll = () => {
+      if (window.scrollY > 400) {
+        btn.style.opacity = "1";
+        btn.style.pointerEvents = "auto";
+        btn.style.transform = "translateY(0)";
+      } else {
+        btn.style.opacity = "0";
+        btn.style.pointerEvents = "none";
+        btn.style.transform = "translateY(8px)";
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    btn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+</script>
