@@ -28,6 +28,21 @@ export const experience: ExperienceItem[] = [
     highlight: true,
   },
   {
+    company: "Nexss S.A.",
+    role: {
+      es: "Senior Java Developer",
+      en: "Senior Java Developer",
+    },
+    period: {
+      es: "08/2024 — 07/2025",
+      en: "08/2024 — 07/2025",
+    },
+    location: {
+      es: "Managua",
+      en: "Managua",
+    },
+  },
+  {
     company: "Over Group",
     role: {
       es: "Site Reliability Engineer",

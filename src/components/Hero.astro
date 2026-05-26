@@ -5,10 +5,11 @@ import StatBox from "./StatBox.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const scrollLabel = lang === "es" ? "Conoce más" : "Learn more";
 ---
 
 <section id="hero" class="relative overflow-hidden bg-dot-grid-fade">
-  <div class="max-w-5xl mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28">
+  <div class="max-w-6xl mx-auto px-6 pt-24 pb-8 md:pt-32 md:pb-12 w-full">
     <!-- Status bar arriba -->
     <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mb-10 font-mono text-xs text-[color:var(--color-text-subtle)]">
       <span class="flex items-center gap-2 text-[color:var(--color-text-muted)]">
@@ -78,7 +79,6 @@ const t = useTranslations(lang);
       <!-- ─── Columna DER: sys info estilo neofetch ─── -->
       <aside class="hidden lg:block">
         <div class="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/80 backdrop-blur overflow-hidden shadow-xl">
-          <!-- Title bar -->
           <div class="flex items-center gap-2 px-4 py-2.5 border-b border-[color:var(--color-border)] bg-[color:var(--color-bg)]/60">
             <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></span>
             <span class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></span>
@@ -88,7 +88,6 @@ const t = useTranslations(lang);
             </span>
           </div>
 
-          <!-- Body -->
           <div class="p-5 font-mono text-xs space-y-1 leading-relaxed">
             <p>
               <span class="text-[color:var(--color-accent)]">tyronne@portfolio</span>
@@ -163,7 +162,32 @@ const t = useTranslations(lang);
       </aside>
     </div>
   </div>
+
+  <!-- ─── Scroll-down indicator ─── -->
+  <div class="max-w-6xl mx-auto px-6 pb-10 w-full">
+    <a
+      href={getLocalizedPath("/#about", lang)}
+      class="inline-flex items-center gap-2 font-mono text-xs text-[color:var(--color-text-subtle)] hover:text-[color:var(--color-accent)] transition-colors"
+      aria-label={scrollLabel}
+    >
+      <span class="uppercase tracking-wider">{scrollLabel}</span>
+      <span class="scroll-arrow text-base leading-none">↓</span>
+    </a>
+  </div>
 </section>
+
+<style>
+  @keyframes scroll-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(6px); }
+  }
+  .scroll-arrow {
+    animation: scroll-bounce 1.6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-arrow { animation: none; }
+  }
+</style>
 
 <script>
   type TypingTarget = HTMLElement;

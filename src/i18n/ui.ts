@@ -40,7 +40,7 @@ export const ui = {
     // ─── Experience / Timeline ────────────────────
     "exp.title": "Trayectoria",
     "exp.intro":
-      "12 años entre Nicaragua, Costa Rica, Colombia, USA, España y Brasil. Empecé como soporte y crecí hacia desarrollo, infraestructura y liderazgo técnico.",
+      "12 años construyendo software y operando infraestructura para empresas en gobierno, aduanas, marketing e iGaming, distribuidas entre USA, España, Brasil, Colombia, Costa Rica y Nicaragua. Hoy lidero equipos de desarrollo y DevOps.",
     "exp.statsCompanies": "Empresas",
     "exp.statsCountries": "Países",
     "exp.statsYears": "Trayectoria",
@@ -152,7 +152,7 @@ export const ui = {
     // ─── Experience / Timeline ────────────────────
     "exp.title": "Career",
     "exp.intro":
-      "12 years across Nicaragua, Costa Rica, Colombia, USA, Spain and Brazil. I started in support and grew into development, infrastructure and technical leadership.",
+      "12 years building software and operating infrastructure for companies in government, customs, marketing and iGaming, distributed across the USA, Spain, Brazil, Colombia, Costa Rica and Nicaragua. Today I lead development and DevOps teams.",
     "exp.statsCompanies": "Companies",
     "exp.statsCountries": "Countries",
     "exp.statsYears": "Career",
