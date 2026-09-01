@@ -20,6 +20,81 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "hi-beauty",
+    title: "Hi Beauty",
+    client: "SUBSCRIPCIONBOXCO-SAS (Colombia)",
+    role: "both",
+    jobTitle: {
+      es: "DevOps Engineer + Backend Consultant",
+      en: "DevOps Engineer + Backend Consultant",
+    },
+    period: {
+      es: "Julio 2026 – Presente",
+      en: "July 2026 – Present",
+    },
+    location: {
+      es: "Remoto · Colombia",
+      en: "Remote · Colombia",
+    },
+    summary: {
+      es: "Ecommerce por suscripción de beauty box operando en Colombia, Chile y España. Migré 21 aplicaciones desde 3 EC2 legacy monolíticos a EKS gestionado por Terraform, con cero downtime en el cutover.",
+      en: "Beauty box subscription ecommerce operating in Colombia, Chile and Spain. Migrated 21 applications from 3 legacy monolithic EC2 instances to EKS managed by Terraform, with zero downtime during the DNS cutover.",
+    },
+    problem: {
+      es: "La operación corría sobre 3 EC2 monolíticos con PM2, Mongo local y Nginx configurado a mano — sin IaC, secretos hardcodeados en archivos .env y despliegues manuales. Además el proveedor de nube estaba por finalizar servicio, lo que obligaba a migrar toda la plataforma a una cuenta AWS nueva bajo presión de tiempo y sin margen para downtime del negocio.",
+      en: "The operation ran on 3 monolithic EC2 instances with PM2, local Mongo and hand-configured Nginx — no IaC, secrets hardcoded in .env files and manual deploys. On top of that, the cloud provider was about to shut down service, forcing a full migration to a new AWS account under time pressure and with no room for business downtime.",
+    },
+    solution: {
+      es: "Diseñé desde cero la infraestructura nueva en AWS EKS 1.33 con Terraform como fuente única de verdad: VPC, node groups (on-demand + spot), NLB con TLS ACM, ECR, ElastiCache Redis. Instalé el operator PSMDB para levantar 3 réplicas MongoDB por país con HA (quorum), centralicé los 42 secretos en AWS Secrets Manager y los sincronicé al cluster con ExternalSecrets Operator + Reloader. Dockericé y armé los manifests K8s de las 21 apps (Express, NestJS y Next.js), reusables workflows de GitHub Actions con OIDC (sin claves long-lived) y ArgoCD/manual deploys por dispatch. Cutover DNS de 22 records vía API de Cloudflare, backup completo de las 3 mongos legacy y sync incremental S3 legacy → nuevo bucket con CronJob. Post-migración detecté una query \\$regex saturando el primary Mongo al 100% CPU (getGuide sobre 718k docs) y la arreglé con equality lowercase + índice compuesto: 27s → 0ms.",
+      en: "I designed the new infrastructure on AWS EKS 1.33 from scratch using Terraform as the single source of truth: VPC, node groups (on-demand + spot), NLB with ACM TLS, ECR, ElastiCache Redis. I installed the PSMDB operator to run 3-replica MongoDB clusters per country with HA (quorum), centralized 42 secrets in AWS Secrets Manager synced to the cluster via ExternalSecrets Operator + Reloader. Dockerized and wrote K8s manifests for 21 apps (Express, NestJS and Next.js), reusable GitHub Actions workflows with OIDC (no long-lived keys) and ArgoCD/manual deploys by dispatch. Cutover of 22 DNS records via Cloudflare API, full backup of the 3 legacy mongos and incremental S3 sync from legacy bucket to the new one via CronJob. Post-migration I found a \\$regex query saturating the Mongo primary to 100% CPU (getGuide over 718k docs) and fixed it with equality lowercase + compound index: 27s → 0ms.",
+    },
+    impact: {
+      es: [
+        "21 microservicios migrados a EKS sin downtime en el cutover DNS",
+        "3 países operando (Colombia, Chile, España) sobre un solo cluster",
+        "42 secretos gestionados centralizadamente con ExternalSecrets + rotación automática",
+        "Ahorro de USD 396/mes en AWS (32% de reducción, de USD 1230 a ~USD 834/mes)",
+        "Bug crítico en producción resuelto: query lenta 27s → 0ms, CPU mongo 100% → 15%",
+        "100% uptime post-cutover sin incidentes reportados",
+      ],
+      en: [
+        "21 microservices migrated to EKS with zero downtime during DNS cutover",
+        "3 countries live (Colombia, Chile, Spain) on a single cluster",
+        "42 secrets centrally managed with ExternalSecrets + automatic rotation",
+        "USD 396/month AWS cost reduction (32% cut, from USD 1230 to ~USD 834/month)",
+        "Critical production bug fixed: 27s query → 0ms, Mongo CPU 100% → 15%",
+        "100% post-cutover uptime with zero reported incidents",
+      ],
+    },
+    stack: [
+      "AWS EKS",
+      "Terraform",
+      "Kubernetes",
+      "Docker",
+      "MongoDB",
+      "Percona Server MongoDB Operator",
+      "ExternalSecrets Operator",
+      "AWS Secrets Manager",
+      "ElastiCache Redis",
+      "CloudFront",
+      "S3",
+      "EventBridge",
+      "SQS",
+      "Cloudflare",
+      "GitHub Actions (OIDC)",
+      "Node.js",
+      "NestJS",
+      "Next.js",
+      "Express",
+    ],
+    links: [
+      { label: "hibeauty.com.co", href: "https://hibeauty.com.co" },
+      { label: "hibeautybox.cl", href: "https://hibeautybox.cl" },
+      { label: "hibeautybox.es", href: "https://hibeautybox.es" },
+    ],
+    featured: true,
+  },
+  {
     slug: "atomo-gaming",
     title: "Atomo Gaming",
     client: "Atomo Gaming (Barcelona)",
